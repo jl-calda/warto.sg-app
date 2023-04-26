@@ -14,7 +14,7 @@ const Avatar: React.FC<AvatarProps> = ({ src, small }) => {
     return <HiUserCircle size={30} color="#166534" className="rounded-full" />;
   return (
     <Image
-      className="rounded-full"
+      className="rounded-full border"
       src={src || "/images/placeholder.jpg"}
       width={`${small ? 30 : 50}`}
       height={`${small ? 30 : 50}`}

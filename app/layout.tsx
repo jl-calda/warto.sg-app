@@ -1,11 +1,13 @@
 import "./globals.css";
 import { Roboto } from "next/font/google";
+
+import getCurrentUser from "./_actions/getCurrentUser";
+
 import Navbar from "./_components/navbar/Navbar";
-import Modal from "./_components/modals/Modal";
 import ClientOnly from "./_components/utils/ClientOnly";
 import RegisterModal from "./_components/modals/RegisterModal";
-import { Toaster } from "react-hot-toast";
 import ToasterProvider from "./_components/utils/ToasterProvider";
+import LoginModal from "./_components/modals/LoginModal";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -20,12 +22,19 @@ export const metadata = {
 interface RootLayoutProps {
   children: React.ReactNode;
 }
-const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
+
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const currentUser = await getCurrentUser();
   return (
     <html lang="en">
       <body className={`${roboto.className} text-stone-800`}>
         <ClientOnly>
-          <Navbar />
+          <Navbar currentUser={currentUser} />
+          <LoginModal />
           <RegisterModal />
           <ToasterProvider />
         </ClientOnly>
@@ -33,6 +42,4 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
       </body>
     </html>
   );
-};
-
-export default RootLayout;
+}

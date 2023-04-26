@@ -13,17 +13,23 @@ import {
   HiOutlineArrowUpOnSquare,
   HiOutlinePencilSquare,
 } from "react-icons/hi2";
+import { signOut } from "next-auth/react";
 
 import useRegisterModal from "@/app/_hooks/useRegisterModal";
 
 import Avatar from "../utils/Avatar";
 import Button from "../utils/Button";
 import MenuItem from "./MenuItem";
+import useLoginModal from "@/app/_hooks/useLoginModal";
 
-function Usermenu() {
+interface UserMenuProps {
+  currentUser?: any;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const router = useRouter();
   const registerModal = useRegisterModal();
-  const currentUser = null;
+  const loginModal = useLoginModal();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = useCallback(() => {
@@ -40,7 +46,7 @@ function Usermenu() {
           className="flex flex-row px-3 py-[9px] space-x-2 items-center cursor-pointer border rounded-xl"
         >
           <HiBars3 size={25} />
-          <Avatar small />
+          <Avatar src={currentUser?.image} small />
         </div>
       </div>
       {isOpen && !currentUser && (
@@ -51,7 +57,7 @@ function Usermenu() {
             icon={HiOutlinePencilSquare}
           />
           <hr className="w-full" />
-          <MenuItem label="Log in" onClick={() => {}} icon={HiPower} />
+          <MenuItem label="Log in" onClick={loginModal.onOpen} icon={HiPower} />
         </div>
       )}
       {isOpen && currentUser && (
@@ -89,11 +95,11 @@ function Usermenu() {
             color
           />
           <hr className="w-full" />
-          <MenuItem label="Sign out" onClick={() => {}} icon={HiPower} />
+          <MenuItem label="Sign out" onClick={() => signOut()} icon={HiPower} />
         </div>
       )}
     </div>
   );
-}
+};
 
-export default Usermenu;
+export default UserMenu;
