@@ -1,9 +1,15 @@
 import React from "react";
+import AddressSelect from "../inputs/AddressSelect";
+import Container from "../utils/Container";
 
 type Props = {};
 
 const SearchBar = (props: Props) => {
-  return <div></div>;
+  return (
+    <Container>
+      <AddressSelect />
+    </Container>
+  );
 };
 
 export default SearchBar;

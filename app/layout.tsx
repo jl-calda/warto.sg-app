@@ -8,6 +8,8 @@ import ClientOnly from "./_components/utils/ClientOnly";
 import RegisterModal from "./_components/modals/RegisterModal";
 import ToasterProvider from "./_components/utils/ToasterProvider";
 import LoginModal from "./_components/modals/LoginModal";
+import SearchBar from "./_components/navbar/SearchBar";
+import ListingModal from "./_components/modals/ListingModal";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -34,8 +36,10 @@ export default async function RootLayout({
       <body className={`${roboto.className} text-stone-800`}>
         <ClientOnly>
           <Navbar currentUser={currentUser} />
+          <SearchBar />
           <LoginModal />
           <RegisterModal />
+          {/* <ListingModal /> */}
           <ToasterProvider />
         </ClientOnly>
         <div className="pt-24">{children}</div>

@@ -16,11 +16,12 @@ import {
 import { signOut } from "next-auth/react";
 
 import useRegisterModal from "@/app/_hooks/useRegisterModal";
+import useLoginModal from "@/app/_hooks/useLoginModal";
+import useListingModal from "@/app/_hooks/useListingModal";
 
 import Avatar from "../utils/Avatar";
 import Button from "../utils/Button";
 import MenuItem from "./MenuItem";
-import useLoginModal from "@/app/_hooks/useLoginModal";
 
 interface UserMenuProps {
   currentUser?: any;
@@ -30,6 +31,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const router = useRouter();
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+  const listingModal = useListingModal();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = useCallback(() => {
@@ -39,7 +41,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
     <div className="relative">
       <div className="flex flex-row space-x-2 items-center">
         <div className="hidden lg:block">
-          <Button label="Post a room" onClick={() => {}} />
+          <Button label="Post a room" onClick={listingModal.onOpen} />
         </div>
         <div
           onClick={toggleOpen}
@@ -62,6 +64,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
       )}
       {isOpen && currentUser && (
         <div className="absolute right-0 top-16 px-4 py-3 shadow-md rounded-2xl bg-white flex flex-col space-y-2 items-center min-w-[200px]">
+          <div>{`${currentUser.name}`}</div>
+          <hr className="w-full" />
           <MenuItem
             label="Profile"
             onClick={() => router.push("/profile")}
@@ -90,7 +94,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           <hr className="w-full" />
           <MenuItem
             label="Post a room"
-            onClick={() => router.push("/favorites")}
+            onClick={listingModal.onOpen}
             icon={HiOutlineArrowUpOnSquare}
             color
           />

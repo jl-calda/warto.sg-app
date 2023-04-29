@@ -4,42 +4,9 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import MenuItem from "./MenuItem";
 
-export const categories = [
-  {
-    label: "Common Room",
-    value: "common-room",
-  },
-  {
-    label: "Masters Bedroom",
-    value: "masters-bedroom",
-  },
-  {
-    label: "Sharing Room",
-    value: "sharing-room",
-  },
-  {
-    label: "Solo Room",
-    value: "solo-room",
-  },
-  {
-    label: "Study Room",
-    value: "study-room",
-  },
-  {
-    label: "Entire Unit",
-    value: "entire-unit",
-  },
-  {
-    label: "HDB Flat",
-    value: "hdb-flat",
-  },
-  {
-    label: "Condominium",
-    value: "condominium",
-  },
-];
+import categories from "@/app/_constants/roomTypes";
 
-const Categories = () => {
+const CategoryList = () => {
   const params = useSearchParams();
   const category = params?.get("category");
 
@@ -58,4 +25,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default CategoryList;

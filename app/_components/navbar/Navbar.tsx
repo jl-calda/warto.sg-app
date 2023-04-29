@@ -2,7 +2,7 @@
 
 import Container from "../utils/Container";
 import ActionButtons from "./ActionButtons";
-import Categories from "./Categories";
+import CategoryList from "./Categories";
 import Logo from "./Logo";
 import Search from "./SearchBar";
 import UserMenu from "./UserMenu";
@@ -18,7 +18,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
         <Container>
           <div className="flex flex-row spacing-x-4 items-center justify-between">
             <Logo />
-            <Categories />
+            <CategoryList />
             <UserMenu currentUser={currentUser} />
           </div>
         </Container>
