@@ -1,6 +1,5 @@
 "use client";
 
-import RadioPill from "../_components/inputs/radiopill/RadioPill";
 import roomTypes from "../_constants/roomTypes";
 import houseTypes from "../_constants/houseTypes";
 import genderTypes from "../_constants/genderTypes";
@@ -11,70 +10,62 @@ import { useCallback, useState } from "react";
 import { HouseType } from "../_constants/houseTypes";
 import { RoomType } from "../_constants/roomTypes";
 import ClientOnly from "../_components/utils/ClientOnly";
+import ListClient from "./ListClient";
+import RadioPill from "../_components/inputs/radiogroup/RadioPill";
+import InputField from "../_components/inputs/inputfield/InputField";
 
 const ListPage = () => {
-  const [houseType, setHouseType] = useState<HouseType>(houseTypes[0]);
-  const [roomType, setRoomType] = useState<RoomType>(roomTypes[0]);
-  const [genderType, setGenderType] = useState<RoomType>(genderTypes[0]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === "houseType") {
-      setHouseType({
-        label: e.target.dataset.label || "",
-        value: e.target.value,
-      });
-      return;
-    } else if (e.target.name === "roomType") {
-      setRoomType({
-        label: e.target.dataset.label || "",
-        value: e.target.value,
-      });
-      return;
-    } else if (e.target.name === "genderType") {
-      setGenderType({
-        label: e.target.dataset.label || "",
-        value: e.target.value,
-      });
-      return;
-    }
-  }, []);
+  const [houseType, setHouseType] = useState(houseTypes[0].value);
+  const [roomType, setRoomType] = useState(roomTypes[0].value);
+  const [genderType, setGenderType] = useState(genderTypes[0].value);
 
   return (
     <Container>
       <div className="grid grid-cols-1 sm:grid-cols-5">
         <div className="flex flex-col">
-          <div>{`${houseType?.label}:${houseType?.value}`}</div>
-          <div>{`${roomType?.label}:${roomType?.value}`}</div>
+          <div>{`${houseType}:${houseType}`}</div>
+          <div>{`${roomType}:${roomType}`}</div>
+          <div>{title}</div>
         </div>
         <div className="col-span-3 col-start-3">
-          <div className="flex flex-col">
-            <ClientOnly>
-              <RadioPill
-                title="Category"
-                data={houseTypes}
-                name="houseType"
-                value={houseType}
-                onChange={handleChange}
-                others
-              />
-              <hr />
-              <RadioPill
-                title="Room Type"
-                data={roomTypes}
-                name="roomType"
-                value={roomType}
-                onChange={handleChange}
-                others
-              />
-              <RadioPill
-                title="Preferred Gender"
-                data={genderTypes}
-                name="genderType"
-                value={genderType}
-                onChange={handleChange}
-              />
-            </ClientOnly>
-          </div>
+          <ClientOnly>
+            <InputField
+              label="Listing title"
+              description="Make your title short and descriptive"
+              value={title}
+              onChange={setTitle}
+              isDisabled={false}
+            />
+            <InputField
+              label="Describe your listing"
+              description="Specify the details of your listing"
+              value={title}
+              onChange={setTitle}
+              isDisabled={false}
+              errorMessage="Change your password"
+            />
+            <RadioPill
+              data={houseTypes}
+              value={houseType}
+              onChange={setHouseType}
+              label="Type of Building"
+            />
+            <RadioPill
+              data={roomTypes}
+              value={roomType}
+              onChange={setRoomType}
+              label="Room Type"
+            />
+            <RadioPill
+              data={genderTypes}
+              value={genderType}
+              onChange={setGenderType}
+              label="Preferred Gender"
+            />
+          </ClientOnly>
         </div>
       </div>
     </Container>
