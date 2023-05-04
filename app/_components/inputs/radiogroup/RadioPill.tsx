@@ -31,7 +31,7 @@ const RadioPill: React.FC<RadioPillProps> = ({
         value={value}
         onChange={onChange}
       >
-        <Label className="text-sm text-neutral-700">{label}</Label>
+        <Label className="text-base text-neutral-700">{label}</Label>
         <div className="px-2 flex flex-row flex-wrap gap-x-2 gap-y-4">
           {values.map((item, index) => (
             <Radio
@@ -44,7 +44,7 @@ const RadioPill: React.FC<RadioPillProps> = ({
               cursor-pointer
               transition-all
               duration-150
-              text-xs
+              text-sm
               border-transparent
               shadow-sm
               rounded-full

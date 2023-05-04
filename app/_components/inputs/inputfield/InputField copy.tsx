@@ -4,12 +4,13 @@ import { useState } from "react";
 import { Text, TextField, Label, Input } from "react-aria-components";
 import { TextFieldProps } from "react-aria-components";
 import { HiOutlineEyeSlash, HiOutlineEye } from "react-icons/hi2";
-import { BiDollar } from "react-icons/bi";
 
 interface InputFieldProps extends TextFieldProps {
   label?: string;
+  errorMessage?: string;
+  description?: string;
   error?: boolean;
-  formatPrice?: boolean;
+  ref: any;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -18,68 +19,56 @@ const InputField: React.FC<InputFieldProps> = ({
   label,
   type = "text",
   isDisabled,
+  errorMessage,
+  description,
   isRequired = true,
-  formatPrice,
+  ref,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <TextField
+      ref={ref}
       isRequired={isRequired}
       isDisabled={isDisabled}
       validationState="invalid"
-      className="relative flex flex-col space-y-2 px-2 py-3 w-full"
+      className="relative flex flex-col space-y-2 px-2 pt-2 pb-6 w-full"
       type={showPassword ? "text" : type}
       value={value}
       onChange={onChange}
     >
       <Input
-        className={`
-        ${formatPrice ? "pl-8" : "pl-5"}
-        pr-5
+        className="
         peer
         border
         border-teal-500
-        px-5
+        px-3
         pb-1
-        pt-7
-        rounded-2xl
+        pt-6
+        rounded-md
         text-sm
         focus:outline-none
         focus:ring-2
         focus:ring-offset-1
       focus:ring-teal-500
         focus:border-transparent
-        shadow-sm`}
+        shadow-sm"
         placeholder=" "
       />
       <Label
-        className={`
+        className="
         text-neutral-500
-        origin-[0]
         absolute
-        left-4
         transition-all
         duration-300
-        transform 
-        underline
-        -translate-y-0
         bg-white
         text-xs
-        px-1
-        peer-placeholder-shown:scale-100
-        peer-placeholder-shown:translate-y-0
-        peer-focus:no-underline
-        peer-focus:scale-100
-        peer-focus:-translate-y-5
-  `}
+        left-4
+        peer-focus:underline
+        "
       >
         {label}
       </Label>
-      {formatPrice && (
-        <BiDollar className="absolute bottom-5 left-6" size={15} />
-      )}
-
       {type === "password" && (
         <div
           onClick={() => setShowPassword(!showPassword)}
@@ -92,6 +81,19 @@ const InputField: React.FC<InputFieldProps> = ({
           )}
         </div>
       )}
+      <Text
+        className="absolute bottom-0 peer-focus:text-xs peer-focus:block text-neutral-500 text-xs hidden"
+        slot="description"
+      >
+        {description}
+      </Text>
+
+      <Text
+        className="text-red-500 absolute bottom-0 right-2 text-xs hidden"
+        slot="errorMessage"
+      >
+        {errorMessage}
+      </Text>
     </TextField>
   );
 };
